@@ -5,7 +5,6 @@ import { useState, useEffect, useRef } from "react";
 export default function Page() {
   const title = "Welcome To my Website";
   const [titleState, setTitleState] = useState("");
-  let index = 0;
   const [titleScreen, setTitleScreen] = useState(true);
   const titleScreenRef = useRef(titleScreen);
 
@@ -13,13 +12,21 @@ export default function Page() {
   const selectedIndexRef = useRef(selectedIndex);
 
   const pathName = window.location.pathname;
+  let titleIndex = 0;
+  let subTitleIndex = 0;
 
   async function animateText() {
-    for (index = 0; index < title.length + 1; index++) {
-      if (Math.random() > 0.75 && index > 0 && index < title.length - 2) {
-        setTitleState(title.slice(0, index - 1) + "%" + title[index - 1]);
+    for (titleIndex = 0; titleIndex < title.length + 1; titleIndex++) {
+      if (
+        Math.random() > 0.75 &&
+        titleIndex > 0 &&
+        titleIndex < title.length - 2
+      ) {
+        setTitleState(
+          title.slice(0, titleIndex - 1) + "%" + title[titleIndex - 1]
+        );
       } else {
-        setTitleState(title.slice(0, index));
+        setTitleState(title.slice(0, titleIndex));
       }
       await new Promise((resolve) => setTimeout(resolve, 200));
     }
@@ -30,8 +37,12 @@ export default function Page() {
   const randomDelay = Math.floor(Math.random() * (110 - 89)) + 90;
 
   async function animateBottom() {
-    for (index = 0; index < subtitle.length + 1; index++) {
-      setSubTitleWriter(subtitle.slice(0, index));
+    for (
+      subTitleIndex = 0;
+      subTitleIndex < subtitle.length + 1;
+      subTitleIndex++
+    ) {
+      setSubTitleWriter(subtitle.slice(0, subTitleIndex));
       await new Promise((resolve) => setTimeout(resolve, randomDelay));
     }
   }
