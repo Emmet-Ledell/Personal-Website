@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Page() {
@@ -11,6 +11,7 @@ export default function Page() {
   const [titleState, setTitleState] = useState("");
   const [subTitleWriter, setSubTitleWriter] = useState("");
   const [blackScreen, setBlackScreen] = useState(true);
+  const [loadingFlash, setLoadingFlash] = useState(false);
 
   const randomDelay = Math.floor(Math.random() * (110 - 89)) + 90;
   let titleIndex = 0;
@@ -44,6 +45,11 @@ export default function Page() {
       await new Promise((resolve) => setTimeout(resolve, randomDelay));
     }
   }
+  async function flashLoading() {
+    setLoadingFlash((prev) => !prev);
+    await new Promise((result) => setTimeout(result, 500));
+    flashLoading();
+  }
 
   const keyDownHandler = (e: KeyboardEvent) => {
     if (e.key === "Enter") {
@@ -57,7 +63,8 @@ export default function Page() {
     // const gamestartAudio = new Audio("/sounds/gamestart.mp3");
 
     (async () => {
-      await new Promise((result) => setTimeout(result, 2000));
+      flashLoading();
+      await new Promise((result) => setTimeout(result, 2500));
       setBlackScreen(false);
 
       animateText();
@@ -72,7 +79,7 @@ export default function Page() {
     <>
       {blackScreen ? (
         <div className=" h-screen bg-black flex items-center justify-center text-white">
-          Loading...
+          {loadingFlash && "Loading..."}
         </div>
       ) : (
         <div className="scanlines bg-blue-100 flex items-center justify-center flex-col h-screen">
