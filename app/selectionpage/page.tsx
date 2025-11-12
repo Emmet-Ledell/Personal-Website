@@ -7,9 +7,9 @@ export default function SelectionPage() {
 
   const menuItems = [
     { label: "Contact", path: "/contact" },
-    { label: "Projects", path: "/projects" },
+    // { label: "Projects", path: "/projects" },
     { label: "Resume", path: "/resume" },
-    { label: "Skills", path: "/skills" },
+    // { label: "Skills", path: "/skills" },
     { label: "Mini Games", path: "/minigames" },
   ];
 
