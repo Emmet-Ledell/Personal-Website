@@ -1,13 +1,18 @@
 "use client";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Page() {
   const title = "Welcome To my Website";
   const [titleState, setTitleState] = useState("");
   let index = 0;
   const [titleScreen, setTitleScreen] = useState(true);
+  const titleScreenRef = useRef(titleScreen);
+
   const [selectedIndex, setSeelctedIndex] = useState(0);
+  const selectedIndexRef = useRef(selectedIndex);
+
+  const pathName = window.location.pathname;
 
   async function animateText() {
     for (index = 0; index < title.length + 1; index++) {
@@ -31,21 +36,47 @@ export default function Page() {
     }
   }
 
+  const menuItems = [
+    { label: "Contact Fighter", path: "/contact" },
+    { label: "Previous Matches", path: "/projects" },
+    { label: "Resume", path: "/resume" },
+    { label: "Move Set", path: "/skills" },
+  ];
+
   useEffect(() => {
-    const audio = new Audio("/sounds/arrowsound.mp3");
-    audio.play();
+    titleScreenRef.current = titleScreen;
+  }, [titleScreen]);
+
+  useEffect(() => {
+    selectedIndexRef.current = selectedIndex;
+  }, [selectedIndex]);
+
+  useEffect(() => {
     animateText();
     setTimeout(() => {
       animateBottom();
-    }, 5000);
+    }, 4500);
 
     const keyDownHandler = (e: KeyboardEvent) => {
-      console.log(e.key);
+      const audio = new Audio("/sounds/entersound.mp3");
+      const arrowSound = new Audio("/sounds/arrowsound.mp3");
       if (e.key === "Enter") {
-        if (titleScreen) {
+        if (titleScreenRef.current) {
+          audio.play();
           // select.play();
           setTitleScreen(false);
+        } else {
+          console.log("herhehherhehrhere");
+          window.location.href = menuItems[selectedIndexRef.current].path;
         }
+      }
+      if (e.key === "ArrowDown") {
+        arrowSound.play();
+        setSeelctedIndex((prev) => (prev < 3 ? prev + 1 : prev));
+      }
+      if (e.key === "ArrowUp") {
+        arrowSound.play();
+        setSeelctedIndex((prev) => (prev > 0 ? prev - 1 : prev));
       }
     };
     document.addEventListener("keydown", keyDownHandler);
@@ -54,13 +85,6 @@ export default function Page() {
       document.removeEventListener("keydown", keyDownHandler);
     };
   }, []);
-
-  const options = [
-    "Contact Fighter (contact)",
-    "Previous Matches (projects)",
-    "Resume (fix later)",
-    "Move set (skills)",
-  ];
 
   return (
     <div>
@@ -71,13 +95,16 @@ export default function Page() {
         </div>
       ) : (
         <div>
-          <div className="content flex flex-col items-center justify-center h-full gap-4">
-            {/* {#each options as option, i}
-          <div class="text-3xl">
-            {selectedIndex === i ? '-> ' : ''}{option}
+          <div className="flex items-center justify-center h-full flex-col h-screen gap-4">
+            {menuItems.map((option, index) => {
+              return (
+                <div key={index}>
+                  {selectedIndex === index ? "->" : ""}
+                  {option.label}
+                </div>
+              );
+            })}
           </div>
-        {/each} */}
-          </div>{" "}
         </div>
       )}
 
