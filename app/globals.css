@@ -20,6 +20,16 @@
   }
 }
 
+.scanlines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.1) 4px
+  );
+  background-blend-mode: multiply; 
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

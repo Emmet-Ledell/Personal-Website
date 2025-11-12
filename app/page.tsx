@@ -1,11 +1,9 @@
 "use client";
-import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 
 export default function Page() {
   const title = "Welcome To my Website";
   const subtitle = "press enter to start";
-  const pathName = window.location.pathname;
   const menuItems = [
     { label: "Contact Fighter", path: "/contact" },
     { label: "Previous Matches", path: "/projects" },
@@ -98,12 +96,12 @@ export default function Page() {
   return (
     <div>
       {titleScreen ? (
-        <div className="flex items-center justify-center h-full flex-col h-screen">
+        <div className="scanlines bg-blue-100 flex items-center justify-center flex-col h-screen">
           <div className="text-6xl">{titleState}</div>
           <div>{subTitleWriter}</div>
         </div>
       ) : (
-        <div className="flex items-center justify-center h-full flex-col h-screen gap-4">
+        <div className="scanlines bg-blue-100 flex items-center justify-center flex-col h-screen gap-4">
           {menuItems.map((option, index) => (
             <div key={index}>
               {selectedIndex === index ? "->" : ""}
