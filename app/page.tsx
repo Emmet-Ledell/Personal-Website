@@ -4,14 +4,24 @@ import { useState, useEffect, useRef } from "react";
 
 export default function Page() {
   const title = "Welcome To my Website";
-  const [titleState, setTitleState] = useState("");
-  const [titleScreen, setTitleScreen] = useState(true);
-  const titleScreenRef = useRef(titleScreen);
+  const subtitle = "press enter to start";
+  const pathName = window.location.pathname;
+  const menuItems = [
+    { label: "Contact Fighter", path: "/contact" },
+    { label: "Previous Matches", path: "/projects" },
+    { label: "Resume", path: "/resume" },
+    { label: "Move Set", path: "/skills" },
+  ];
 
+  const [titleState, setTitleState] = useState("");
+  const [subTitleWriter, setSubTitleWriter] = useState("");
+  const [titleScreen, setTitleScreen] = useState(true);
   const [selectedIndex, setSeelctedIndex] = useState(0);
+
+  const titleScreenRef = useRef(titleScreen);
   const selectedIndexRef = useRef(selectedIndex);
 
-  const pathName = window.location.pathname;
+  const randomDelay = Math.floor(Math.random() * (110 - 89)) + 90;
   let titleIndex = 0;
   let subTitleIndex = 0;
 
@@ -32,10 +42,6 @@ export default function Page() {
     }
   }
 
-  const subtitle = "press enter to start";
-  const [subTitleWriter, setSubTitleWriter] = useState("");
-  const randomDelay = Math.floor(Math.random() * (110 - 89)) + 90;
-
   async function animateBottom() {
     for (
       subTitleIndex = 0;
@@ -46,13 +52,6 @@ export default function Page() {
       await new Promise((resolve) => setTimeout(resolve, randomDelay));
     }
   }
-
-  const menuItems = [
-    { label: "Contact Fighter", path: "/contact" },
-    { label: "Previous Matches", path: "/projects" },
-    { label: "Resume", path: "/resume" },
-    { label: "Move Set", path: "/skills" },
-  ];
 
   useEffect(() => {
     titleScreenRef.current = titleScreen;
@@ -71,6 +70,7 @@ export default function Page() {
     const keyDownHandler = (e: KeyboardEvent) => {
       const audio = new Audio("/sounds/entersound.mp3");
       const arrowSound = new Audio("/sounds/arrowsound.mp3");
+
       if (e.key === "Enter") {
         if (titleScreenRef.current) {
           audio.play();
@@ -79,20 +79,20 @@ export default function Page() {
           window.location.href = menuItems[selectedIndexRef.current].path;
         }
       }
+
       if (e.key === "ArrowDown") {
         arrowSound.play();
         setSeelctedIndex((prev) => (prev < 3 ? prev + 1 : prev));
       }
+
       if (e.key === "ArrowUp") {
         arrowSound.play();
         setSeelctedIndex((prev) => (prev > 0 ? prev - 1 : prev));
       }
     };
-    document.addEventListener("keydown", keyDownHandler);
 
-    return () => {
-      document.removeEventListener("keydown", keyDownHandler);
-    };
+    document.addEventListener("keydown", keyDownHandler);
+    return () => document.removeEventListener("keydown", keyDownHandler);
   }, []);
 
   return (
@@ -100,24 +100,18 @@ export default function Page() {
       {titleScreen ? (
         <div className="flex items-center justify-center h-full flex-col h-screen">
           <div className="text-6xl">{titleState}</div>
-          <div>{subTitleWriter}</div>{" "}
+          <div>{subTitleWriter}</div>
         </div>
       ) : (
-        <div>
-          <div className="flex items-center justify-center h-full flex-col h-screen gap-4">
-            {menuItems.map((option, index) => {
-              return (
-                <div key={index}>
-                  {selectedIndex === index ? "->" : ""}
-                  {option.label}
-                </div>
-              );
-            })}
-          </div>
+        <div className="flex items-center justify-center h-full flex-col h-screen gap-4">
+          {menuItems.map((option, index) => (
+            <div key={index}>
+              {selectedIndex === index ? "->" : ""}
+              {option.label}
+            </div>
+          ))}
         </div>
       )}
-
-      {/* hello 2<Link href={"lol"}> button</Link> */}
     </div>
   );
 }
