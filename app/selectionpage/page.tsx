@@ -6,10 +6,10 @@ export default function SelectionPage() {
   const router = useRouter();
 
   const menuItems = [
-    { label: "Contact", path: "/contact" },
-    // { label: "Projects", path: "/projects" },
-    { label: "Resume", path: "/resume" },
-    // { label: "Skills", path: "/skills" },
+    { label: "Contact", path: "/selectionpage/contact" },
+    // { label: "Projects", path: "/selectionpage/projects" },
+    { label: "Resume", path: "/selectionpage/resume" },
+    // { label: "Skills", path: "/selectionpage/skills" },
     { label: "Mini Games", path: "/minigames" },
   ];
 
