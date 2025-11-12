@@ -8,7 +8,7 @@ export default function Page() {
       <button
         className="absolute top-0 left-0 cursor-pointer border border-black border-2"
         onClick={() => {
-          router.push("/selectionpage");
+          router.push("/minigames");
         }}
       >
         back
