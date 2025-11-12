@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 export default function Page() {
   const router = useRouter();
 
-  const menuItems = [{ label: "Mini Games", path: "/minigames" }];
+  const menuItems = [{ label: "Coming Soon!", path: "/minigames" }];
 
   const [selectedIndex, setSeelctedIndex] = useState(0);
   const selectedIndexRef = useRef(selectedIndex);
