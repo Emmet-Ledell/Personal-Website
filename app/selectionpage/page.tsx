@@ -6,10 +6,10 @@ export default function SelectionPage() {
   const router = useRouter();
 
   const menuItems = [
-    { label: "Contact Fighter", path: "/contact" },
-    { label: "Previous Matches", path: "/projects" },
+    { label: "Contact", path: "/contact" },
+    { label: "Projects", path: "/projects" },
     { label: "Resume", path: "/resume" },
-    { label: "Move Set", path: "/skills" },
+    { label: "Skills", path: "/skills" },
   ];
 
   const [selectedIndex, setSeelctedIndex] = useState(0);
@@ -22,7 +22,7 @@ export default function SelectionPage() {
   useEffect(() => {
     const keyDownHandler = (e: KeyboardEvent) => {
       const arrowSound = new Audio("/sounds/arrowsound.mp3");
-      const selectionsound = new Audio("/sounds/entersound.mp3");
+      const selectionsound = new Audio("/sounds/projectselect.mp3");
 
       if (e.key === "Enter") {
         selectionsound.play();

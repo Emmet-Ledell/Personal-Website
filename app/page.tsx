@@ -43,21 +43,30 @@ export default function Page() {
     }
   }
 
+  const keyDownHandler = (e: KeyboardEvent) => {
+    if (e.key === "Enter") {
+      const audio = new Audio("/sounds/entersound.mp3");
+      audio.play();
+      router.push("/selectionpage");
+    }
+  };
+
   useEffect(() => {
-    animateText();
-    setTimeout(() => {
+    const gamestartAudio = new Audio("/sounds/gamestart.mp3");
+
+    (async () => {
+      gamestartAudio.play();
+      await new Promise((result) => setTimeout(result, 2000));
+
+      gamestartAudio.pause();
+      animateText();
+      await new Promise((result) => setTimeout(result, 4500));
+
       animateBottom();
-    }, 4500);
 
-    const keyDownHandler = (e: KeyboardEvent) => {
-      if (e.key === "Enter") {
-        const audio = new Audio("/sounds/entersound.mp3");
-        audio.play();
-        router.push("/selectionpage");
-      }
-    };
+      document.addEventListener("keydown", keyDownHandler);
+    })();
 
-    document.addEventListener("keydown", keyDownHandler);
     return () => document.removeEventListener("keydown", keyDownHandler);
   }, []);
 

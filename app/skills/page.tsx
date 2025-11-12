@@ -5,7 +5,7 @@ export default function Page() {
   return (
     <div className="scanlines bg-blue-100 h-screen">
       <button
-        className="cursor-pointer border border-black border-2"
+        className="absolute top-0 left-0 cursor-pointer border border-black border-2"
         onClick={() => {
           router.push("/selectionpage");
         }}
