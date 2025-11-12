@@ -1,11 +1,13 @@
 "use client";
+import { useRouter } from "next/navigation";
 export default function Page() {
+  const router = useRouter();
   return (
     <div className="scanlines bg-blue-100 h-screen">
       <button
         className="cursor-pointer border border-black border-2"
         onClick={() => {
-          window.location.href = "/";
+          router.push("/selectionpage");
         }}
       >
         back
