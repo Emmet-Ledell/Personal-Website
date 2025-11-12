@@ -74,10 +74,8 @@ export default function Page() {
       if (e.key === "Enter") {
         if (titleScreenRef.current) {
           audio.play();
-          // select.play();
           setTitleScreen(false);
         } else {
-          console.log("herhehherhehrhere");
           window.location.href = menuItems[selectedIndexRef.current].path;
         }
       }
