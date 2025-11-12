@@ -31,6 +31,7 @@ export default function Page() {
       }
       await new Promise((resolve) => setTimeout(resolve, 200));
     }
+    animateBottom();
   }
 
   async function animateBottom() {
@@ -53,20 +54,13 @@ export default function Page() {
   };
 
   useEffect(() => {
-    const gamestartAudio = new Audio("/sounds/gamestart.mp3");
+    // const gamestartAudio = new Audio("/sounds/gamestart.mp3");
 
     (async () => {
-      await new Promise((result) => setTimeout(result, 250));
-
-      gamestartAudio.play();
       await new Promise((result) => setTimeout(result, 2000));
       setBlackScreen(false);
 
-      gamestartAudio.pause();
       animateText();
-      await new Promise((result) => setTimeout(result, 4200));
-
-      animateBottom();
 
       document.addEventListener("keydown", keyDownHandler);
     })();
@@ -77,7 +71,9 @@ export default function Page() {
   return (
     <>
       {blackScreen ? (
-        <div className=" h-screen bg-black"> </div>
+        <div className=" h-screen bg-black flex items-center justify-center text-white">
+          Loading...
+        </div>
       ) : (
         <div className="scanlines bg-blue-100 flex items-center justify-center flex-col h-screen">
           <div className="text-6xl">{titleState}</div>
