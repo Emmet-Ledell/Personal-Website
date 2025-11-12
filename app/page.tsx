@@ -10,6 +10,7 @@ export default function Page() {
 
   const [titleState, setTitleState] = useState("");
   const [subTitleWriter, setSubTitleWriter] = useState("");
+  const [blackScreen, setBlackScreen] = useState(true);
 
   const randomDelay = Math.floor(Math.random() * (110 - 89)) + 90;
   let titleIndex = 0;
@@ -55,12 +56,15 @@ export default function Page() {
     const gamestartAudio = new Audio("/sounds/gamestart.mp3");
 
     (async () => {
+      await new Promise((result) => setTimeout(result, 250));
+
       gamestartAudio.play();
       await new Promise((result) => setTimeout(result, 2000));
+      setBlackScreen(false);
 
       gamestartAudio.pause();
       animateText();
-      await new Promise((result) => setTimeout(result, 4500));
+      await new Promise((result) => setTimeout(result, 4200));
 
       animateBottom();
 
@@ -71,9 +75,15 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="scanlines bg-blue-100 flex items-center justify-center flex-col h-screen">
-      <div className="text-6xl">{titleState}</div>
-      <div>{subTitleWriter}</div>
-    </div>
+    <>
+      {blackScreen ? (
+        <div className=" h-screen bg-black"> </div>
+      ) : (
+        <div className="scanlines bg-blue-100 flex items-center justify-center flex-col h-screen">
+          <div className="text-6xl">{titleState}</div>
+          <div>{subTitleWriter}</div>
+        </div>
+      )}
+    </>
   );
 }

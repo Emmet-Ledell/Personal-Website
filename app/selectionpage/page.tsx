@@ -10,6 +10,7 @@ export default function SelectionPage() {
     { label: "Projects", path: "/projects" },
     { label: "Resume", path: "/resume" },
     { label: "Skills", path: "/skills" },
+    {label: "Mini Games", path: "/minigames"}
   ];
 
   const [selectedIndex, setSeelctedIndex] = useState(0);
