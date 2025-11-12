@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 export default function Page() {
   const router = useRouter();
+  const backRoute = "/selectionpage";
 
   const menuItems = [{ label: "Coming Soon!", path: "/minigames" }];
 
@@ -13,29 +14,32 @@ export default function Page() {
     selectedIndexRef.current = selectedIndex;
   }, [selectedIndex]);
 
+  const keyDownHandler = (e: KeyboardEvent) => {
+    const arrowSound = new Audio("/sounds/arrowsound.mp3");
+    const selectionsound = new Audio("/sounds/projectselect.mp3");
+
+    if (e.key === "Enter") {
+      selectionsound.play();
+      router.push(menuItems[selectedIndexRef.current].path);
+    }
+
+    if (e.key === "Escape") {
+      router.push(backRoute);
+    }
+
+    if (e.key === "ArrowDown") {
+      arrowSound.play();
+      setSeelctedIndex((prev) =>
+        prev < menuItems.length - 1 ? prev + 1 : prev
+      );
+    }
+
+    if (e.key === "ArrowUp") {
+      arrowSound.play();
+      setSeelctedIndex((prev) => (prev > 0 ? prev - 1 : prev));
+    }
+  };
   useEffect(() => {
-    const keyDownHandler = (e: KeyboardEvent) => {
-      const arrowSound = new Audio("/sounds/arrowsound.mp3");
-      const selectionsound = new Audio("/sounds/projectselect.mp3");
-
-      if (e.key === "Enter") {
-        selectionsound.play();
-        router.push(menuItems[selectedIndexRef.current].path);
-      }
-
-      if (e.key === "ArrowDown") {
-        arrowSound.play();
-        setSeelctedIndex((prev) =>
-          prev < menuItems.length - 1 ? prev + 1 : prev
-        );
-      }
-
-      if (e.key === "ArrowUp") {
-        arrowSound.play();
-        setSeelctedIndex((prev) => (prev > 0 ? prev - 1 : prev));
-      }
-    };
-
     document.addEventListener("keydown", keyDownHandler);
     return () => document.removeEventListener("keydown", keyDownHandler);
   });
@@ -45,7 +49,7 @@ export default function Page() {
       <button
         className="absolute top-0 left-0 cursor-pointer border border-black border-2"
         onClick={() => {
-          router.push("/selectionpage");
+          router.push(backRoute);
         }}
       >
         back

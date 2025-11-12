@@ -6,11 +6,11 @@ export default function SelectionPage() {
   const router = useRouter();
 
   const menuItems = [
-    { label: "Contact", path: "/selectionpage/contact" },
     // { label: "Projects", path: "/selectionpage/projects" },
     { label: "Resume", path: "/selectionpage/resume" },
     // { label: "Skills", path: "/selectionpage/skills" },
     { label: "Mini Games", path: "/minigames" },
+    { label: "Contact", path: "/selectionpage/contact" },
   ];
 
   const [selectedIndex, setSeelctedIndex] = useState(0);
@@ -24,6 +24,7 @@ export default function SelectionPage() {
     const keyDownHandler = (e: KeyboardEvent) => {
       const arrowSound = new Audio("/sounds/arrowsound.mp3");
       const selectionsound = new Audio("/sounds/projectselect.mp3");
+      console.log(e.key);
 
       if (e.key === "Enter") {
         selectionsound.play();
